@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import empty from "./img/empty.jpg";
 import axios from "axios";
@@ -8,10 +8,11 @@ const StyledBody = styled.div`
   .upload-body {
     background: #f8f9fa;
     max-width: 650px;
-    height: 550px;
+    height: 750px;
     margin: 80px auto 0px auto;
     box-sizing: border-box;
     position: relative;
+    margin-bottom : 100px;
 
     input {
       display: none;
@@ -35,6 +36,17 @@ const StyledBody = styled.div`
       width: 50%;
     }
 
+    .text{
+      display:flex;
+      background:#fff0f6;
+      margin : 30px 20% 30px 20%;
+      justify-content : center;
+      align-items : center;
+      box-sizing : border-box;
+      white-space: pre-wrap;
+      height:20%;
+    }
+
     .upload-btn {
       position: absolute;
       left: 50%;
@@ -54,9 +66,10 @@ const StyledBody = styled.div`
   }
 `;
 
-function Body() {
+function Body({backend_address}) {
   const inputRef = useRef();
   const [imgBase64, setImgBase64] = useState(empty);
+  const [text,setText] = useState("출력 예시) 오늘도 아무것도 안하고 누워있었다냥.\n나는 아무 생각이 없다냥. 아무 생각이 없기 때문이다냥.");
 
   const onClick = () => {
     // console.log(imgBase64);
@@ -76,11 +89,12 @@ function Body() {
   };
 
   const uploadImage = async () => {
-    const response = await axios.post("http://146.56.129.247:5000/image", {
+    console.log('>>',backend_address.current.value)
+    const response = await axios.post(backend_address.current.value, {
       // data: inputRef.current.files[0],
       image: imgBase64,
     });
-    console.log(response.data.text);
+    setText(response.data.text);
     setImgBase64(
       "data:image/jpeg;base64," +
         response.data.image.slice(2, response.data.image.length - 1)
@@ -102,6 +116,9 @@ function Body() {
         />
 
         <img className="input-image" src={imgBase64} alt="" onClick={onClick} />
+        <div className='text'>
+          {text}
+        </div>
         <div className="upload-btn" onClick={uploadImage}>
           이미지 등록
         </div>
