@@ -1,6 +1,6 @@
 import "./App.css";
 import Body from "./Body";
-import React, { useRef} from "react";
+import React, {useRef} from "react";
 
 function App() {
   const backendAddressRef = useRef();
@@ -10,7 +10,7 @@ function App() {
         <span>냥 중 일 기</span>
       </header>
       <div>back-end address</div>
-        <input defaultValue="http://118.67.129.17:6019/image" ref={backendAddressRef}/>
+        <input defaultValue="http://pred.ga:5000/image/" ref={backendAddressRef}/>
       <Body backend_address={backendAddressRef}/>
     </div>
   );

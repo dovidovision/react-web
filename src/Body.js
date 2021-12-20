@@ -89,16 +89,12 @@ function Body({backend_address}) {
   };
 
   const uploadImage = async () => {
-    console.log('>>',backend_address.current.value)
     const response = await axios.post(backend_address.current.value, {
       // data: inputRef.current.files[0],
       image: imgBase64,
     });
+    console.log('>>',response)
     setText(response.data.text);
-    setImgBase64(
-      "data:image/jpeg;base64," +
-        response.data.image.slice(2, response.data.image.length - 1)
-    );
   };
 
   return (
